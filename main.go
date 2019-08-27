@@ -18,7 +18,7 @@ type server struct{}
 
 func (s *server) DoSum(ctx context.Context, in *add.Numbers) (*add.Resp, error) {
 	return &add.Resp{
-		Sum: in.A + in.B,
+		Sum: in.A + in.B + 10,
 	}, nil
 }
 

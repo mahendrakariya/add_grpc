@@ -4,19 +4,47 @@ metadata:
   name: add-deployment
   labels:
     app: add
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: add
+      version: v1
   template:
     metadata:
       labels:
         app: add
+        version: v1
     spec:
       containers:
       - name: add-grpc-cont
         image: mahendrakariya/add_grpc:0.0.1
+        ports:
+        - containerPort: 50051
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: add-deployment-v2
+  labels:
+    app: add
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: add
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: add
+        version: v2
+    spec:
+      containers:
+      - name: add-grpc-v2
+        image: himani93/add_grpc_v2:0.0.1
         ports:
         - containerPort: 50051
 ---

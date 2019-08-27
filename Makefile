@@ -1,5 +1,5 @@
-USERNAME=mahendrakariya
-IMAGE=add_grpc
+USERNAME=himani93
+IMAGE=add_grpc_v2
 VERSION=0.0.1
 
 build:
