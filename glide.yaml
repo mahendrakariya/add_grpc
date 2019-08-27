@@ -1,0 +1,11 @@
+package: github.com/mahendrakariya/add
+import:
+- package: github.com/golang/protobuf
+  version: v1.3.2
+  subpackages:
+  - proto
+- package: google.golang.org/grpc
+  version: v1.23.0
+  subpackages:
+  - codes
+  - status
