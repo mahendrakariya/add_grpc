@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: add-pod
+spec:
+   containers:
+   - name: add-grpc-cont
+     image: mahendrakariya/add_grpc:0.0.1
+     ports:
+     - containerPort: 50051
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: add-svc
+spec:
+   ports:
+     - protocol: TCP
+       port: 50051
+       targetPort: 50051
