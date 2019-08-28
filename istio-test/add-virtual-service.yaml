@@ -9,3 +9,9 @@ spec:
   - route:
     - destination:
         host: add-svc
+        subset: v1
+      weight: 10
+    - destination:
+        host: add-svc
+        subset: v2
+      weight: 90
