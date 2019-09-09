@@ -19,43 +19,38 @@ spec:
     spec:
       containers:
       - name: add-grpc-cont
-        image: mahendrakariya/add_grpc:0.0.1
+        image: mahendrakariya/add_grpc:0.0.3
         ports:
         - containerPort: 50051
----
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  name: add-deployment-v2
-  labels:
-    app: add
-    version: v2
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: add
-      version: v2
-  template:
-    metadata:
-      labels:
-        app: add
-        version: v2
-    spec:
-      containers:
-      - name: add-grpc-v2
-        image: himani93/add_grpc_v2:0.0.1
-        ports:
-        - containerPort: 50051
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: add-svc
-spec:
-  selector:
-    app: add
-  ports:
-  - protocol: TCP
-    port: 50051
-    targetPort: 50051
+        env:
+        - name: APP_NODE_ID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: APP_NODE_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: CONSUL_CLIENT_HOST
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        - name: NODE_HOST_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - bash
+              - -c
+              - curl -XPUT -d '{"Node":"'"`echo $NODE_HOST_NAME|cut -f1 -d .`"'",
+                "ServiceID":"'"$APP_NODE_ID"'"}' http://"$CONSUL_CLIENT_HOST":8500/v1/catalog/deregister
+                -vvv
+      terminationGracePeriodSeconds: 30
+

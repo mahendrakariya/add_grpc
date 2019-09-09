@@ -1,6 +1,6 @@
-USERNAME=himani93
-IMAGE=add_grpc_v2
-VERSION=0.0.1
+USERNAME=mahendrakariya
+IMAGE=add_grpc
+VERSION=0.0.3
 
 build:
 	go build -o add_grpc
